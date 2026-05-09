@@ -150,6 +150,27 @@ modeck/
 9. **Server URL settings UI**: in-app panel to change server URL, and other settings (see below)
 10. **HTTPS setup**: mkcert self-signed cert for proper PWA install prompt on Android
 11. **Local image upload**: upload image from phone/PC, store as base64 in `icon` field
+12. **Receive data from PC**: new action type `receive` — server pushes data (e.g. PC clipboard contents) to the phone via WebSocket. Phone receives and saves to its own clipboard (`navigator.clipboard.writeText`)
+13. **HTTP request action**: new action type `request` — button fires a GET or POST to an arbitrary URL (e.g. WLED at `http://192.168.x.x/json`), with optional JSON body configured in the editor. Useful for smart home / local API control
+14. **Request response handling**: for GET requests, response body can be:
+    - Saved to phone clipboard
+    - Written to a file on the PC (path configured per button)
+    - Toggle switch in button editor to choose between the two output modes
+
+### Data flow for receive/request actions
+
+```
+receive:
+  PC side: server reads clipboard (xclip/xsel) → pushes via WS → phone saves to clipboard
+
+request (no output):
+  phone → server → HTTP request to target URL → success/error feedback
+
+request (with output):
+  phone → server → HTTP GET → response body →
+    if clipboard: send via WS → phone navigator.clipboard.writeText()
+    if file: write to configured path on PC
+```
 
 ### Settings UI (Phase 9 detail)
 
