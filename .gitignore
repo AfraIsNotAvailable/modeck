@@ -1,0 +1,14 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+server/data/buttons.json
+
+# Node
+client/node_modules/
+client/dist/
+
+# Misc
+.DS_Store
+*.env
+/requirements.txt
