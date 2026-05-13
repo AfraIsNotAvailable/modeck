@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useStore } from "../store";
 import { getServerUrl } from "../api";
 
-type Props = { onSettingsClick: () => void };
+type Props = { onSettingsClick: () => void; onCertSetupClick: () => void };
 
-export default function StatusBar({ onSettingsClick }: Props) {
+export default function StatusBar({ onSettingsClick, onCertSetupClick }: Props) {
   const connected = useStore((s) => s.connected);
   const editMode = useStore((s) => s.editMode);
   const setEditMode = useStore((s) => s.setEditMode);
@@ -16,6 +16,7 @@ export default function StatusBar({ onSettingsClick }: Props) {
       alignItems: "center",
       gap: "8px",
       padding: "8px 16px",
+      paddingTop: "calc(8px + env(safe-area-inset-top, 0px))",
       backgroundColor: "#1a1a1a",
       fontSize: "12px",
       color: "#888",
@@ -39,7 +40,7 @@ export default function StatusBar({ onSettingsClick }: Props) {
       {menuOpen && (
         <div style={{
           position: "absolute", top: "100%", right: "8px", backgroundColor: "#2a2a2a",
-          borderRadius: "8px", border: "1px solid #444", zIndex: 200, minWidth: "140px",
+          borderRadius: "8px", border: "1px solid #444", zIndex: 200, minWidth: "160px",
         }}>
           <button
             onClick={() => { setEditMode(!editMode); setMenuOpen(false); }}
@@ -52,6 +53,12 @@ export default function StatusBar({ onSettingsClick }: Props) {
             style={{ display: "block", width: "100%", background: "none", border: "none", color: "#fff", padding: "10px 16px", textAlign: "left", cursor: "pointer", fontSize: "13px", borderTop: "1px solid #333" }}
           >
             Settings
+          </button>
+          <button
+            onClick={() => { onCertSetupClick(); setMenuOpen(false); }}
+            style={{ display: "block", width: "100%", background: "none", border: "none", color: "#fff", padding: "10px 16px", textAlign: "left", cursor: "pointer", fontSize: "13px", borderTop: "1px solid #333" }}
+          >
+            Install Certificate
           </button>
         </div>
       )}

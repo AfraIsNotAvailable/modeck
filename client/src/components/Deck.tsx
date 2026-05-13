@@ -90,6 +90,7 @@ export default function Deck({ onAddClick, onEditClick }: Props) {
           display: "flex",
           transform: `translateX(calc(-${currentPage * 100}%))`,
           transition: "transform 0.3s ease",
+          touchAction: "pan-x",
         }}
       >
         {Array.from({ length: totalPages }).map((_, pageIndex) => {
@@ -109,6 +110,7 @@ export default function Deck({ onAddClick, onEditClick }: Props) {
                 gridTemplateRows: `repeat(${phoneGridRows}, 1fr)`,
                 gap: "12px",
                 padding: "16px",
+                paddingBottom: totalPages > 1 ? "16px" : "calc(16px + env(safe-area-inset-bottom, 0px))",
               }}
             >
               {pageButtons.map((button) => (
@@ -137,7 +139,7 @@ export default function Deck({ onAddClick, onEditClick }: Props) {
       </div>
 
       {totalPages > 1 && (
-        <div style={{ display: "flex", justifyContent: "center", gap: "8px", padding: "12px" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: "8px", padding: "12px", paddingBottom: "calc(12px + env(safe-area-inset-bottom, 0px))" }}>
           {Array.from({ length: totalPages }).map((_, i) => (
             <div
               key={i}

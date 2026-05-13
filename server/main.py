@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from routes import buttons, execute, ws, utils
+from routes import buttons, execute, ws, utils, setup
 
 app = FastAPI()
 
@@ -16,5 +16,6 @@ app.include_router(buttons.router)
 app.include_router(execute.router)
 app.include_router(ws.router)
 app.include_router(utils.router)
+app.include_router(setup.router)
 
 app.mount("/", StaticFiles(directory="../client/dist", html=True), name="static")
